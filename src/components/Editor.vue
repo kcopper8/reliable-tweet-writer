@@ -11,21 +11,7 @@
 </template>
 
 <script>
-const DataService = {
-  save(message) {
-    localStorage.lastText = message;
-  },
-  clear() {
-    localStorage.lastText = '';
-  },
-  load() {
-    if (localStorage.lastText) {
-      return localStorage.lastText;
-    }
-
-    return '';
-  },
-};
+import DataService from '@/service/DataService';
 
 export default {
   name: 'Editor',
