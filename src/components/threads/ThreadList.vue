@@ -1,24 +1,25 @@
 <template>
-<div>
+<div class="scroll">
   <h1>Thread List</h1>
-  <ul>
-    <li
+  <ul class="threads">
+    <item
       v-for="thread in threadList"
       v-bind:key="thread.id"
-    >
-      {{thread.text.substr(0, 20)}} <template v-if="thread.text.length > 20">...</template>
-      <button @click="load(thread.id)">load</button>
-      <button @click="clear(thread.id)">clear</button>
-    </li>
+      :thread="thread"
+      @load="load(thread.id)"
+      @clear="clear(thread.id)"
+    ></item>
   </ul>
-  <router-link to="/">Editor</router-link>
+<function-wrap>
+  <rtw-router-link to="/">Editor</rtw-router-link>
+</function-wrap>
 </div>
 </template>
 
 <script>
 import dataService from '@/service/DataServiceHolder';
 import router from '@/router';
-
+import ThreadListItem from './ThreadListItem';
 
 export default {
   name: 'ThreadList',
@@ -27,6 +28,10 @@ export default {
     return {
       threadList: dataService.threadList(),
     };
+  },
+
+  components: {
+    item: ThreadListItem,
   },
 
   methods: {
@@ -42,6 +47,12 @@ export default {
 };
 </script>
 
-<style>
-
+<style scoped>
+.scroll {
+  height: 100%;
+  overflow: scroll;
+}
+.threads {
+  padding: 0;
+}
 </style>

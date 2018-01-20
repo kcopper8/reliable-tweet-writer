@@ -3,8 +3,17 @@
 import Vue from 'vue';
 import App from './App';
 import router from './router';
+import FunctionWrap from './components/FunctionWrap';
+import RtwButton from './components/RtwButton';
+import RtwLink from './components/RtwLink';
+import RtwRouterLink from './components/RtwRouterLink';
 
 Vue.config.productionTip = false;
+
+Vue.component(FunctionWrap.name, FunctionWrap);
+Vue.component(RtwButton.name, RtwButton);
+Vue.component(RtwLink.name, RtwLink);
+Vue.component(RtwRouterLink.name, RtwRouterLink);
 
 /* eslint-disable no-new */
 new Vue({

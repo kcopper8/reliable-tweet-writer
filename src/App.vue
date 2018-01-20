@@ -1,6 +1,8 @@
 <template>
   <div id="wrap">
+    <div class="layout">
     <router-view/>
+    </div>
   </div>
 </template>
 
@@ -30,6 +32,12 @@ html,body {
   margin: 0;
   padding: 0 10px;
   height: 100%;
+  overflow: hidden;
+}
+
+.layout {
+  height: 100%;
+  padding-bottom: 60px;
   overflow: hidden;
 }
 </style>

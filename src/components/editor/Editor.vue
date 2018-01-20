@@ -3,11 +3,11 @@
   <div class="box">
     <textarea class="text" v-model="message" placeholder="tweet contents"></textarea>
   </div>
-  <div class="function_wrap">
-    <a class="button submitText" :href="tweetIntentUrl" target="TweetWindow">tweet</a>
-    <button class="button" @click="newThread">New Text</button>
-    <router-link class="button submitText" to="/threads">Thread List</router-link>
-  </div>
+  <function-wrap>
+    <rtw-link :href="tweetIntentUrl" target="TweetWindow">tweet</rtw-link>
+    <rtw-button @click="newThread">New Text</rtw-button>
+    <rtw-router-link to="/threads">Thread List</rtw-router-link>
+  </function-wrap>
 </div>
 </template>
 
@@ -51,7 +51,7 @@ export default {
 }
 
 .box {
-  padding: 10px 0 150px;
+  padding: 10px 0;
   height: 100%;
 }
 
@@ -59,27 +59,4 @@ export default {
   width: 100%;
   height: 100%;
 }
-
-.function_wrap {
-  position: fixed;
-  bottom: 105px;
-}
-
-.submitText {
-  border: solid 1px;
-  border-width: 2px;
-  border-style: outset;
-  -webkit-appearance: button;
-  text-transform: none;
-  text-indent: 0px;
-  font: 400 13.3px Arial;
-  text-align: center;
-  color: buttontext;
-  text-decoration: none;
-}
-
-.button {
-  padding: 10px;
-}
-
 </style>

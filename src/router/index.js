@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Editor from '@/components/Editor';
-import ThreadList from '@/components/ThreadList';
+import Editor from '@/components/editor/Editor';
+import ThreadList from '@/components/threads/ThreadList';
 
 Vue.use(Router);
 
