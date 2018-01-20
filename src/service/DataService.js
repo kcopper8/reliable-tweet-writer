@@ -1,15 +1,27 @@
-export default {
+export default class DataService {
+  constructor(storage) {
+    this.storage = storage || localStorage;
+  }
+
+  static build() {
+    return new DataService();
+  }
+
+  static buildWithStorage(storage) {
+    return new DataService(storage);
+  }
+
   save(message) {
-    localStorage.lastText = message;
-  },
+    this.storage.lastText = message;
+  }
   clear() {
-    localStorage.lastText = '';
-  },
+    this.storage.lastText = '';
+  }
   load() {
-    if (localStorage.lastText) {
-      return localStorage.lastText;
+    if (this.storage.lastText) {
+      return this.storage.lastText;
     }
 
     return '';
-  },
-};
+  }
+}
