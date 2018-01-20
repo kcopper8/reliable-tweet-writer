@@ -5,7 +5,8 @@
   </div>
   <div class="function_wrap">
     <a class="button submitText" :href="tweetIntentUrl" target="TweetWindow">tweet</a>
-    <button class="button" @click="clear">clear</button>
+    <button class="button" @click="newThread">New Text</button>
+    <router-link class="button submitText" to="/threads">Thread List</router-link>
   </div>
 </div>
 </template>
@@ -35,9 +36,9 @@ export default {
   },
 
   methods: {
-    clear() {
-      DataService.clear();
-      this.message = '';
+    newThread() {
+      DataService.newThread();
+      this.message = DataService.load();
     },
   },
 };

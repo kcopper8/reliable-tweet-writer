@@ -1,8 +1,16 @@
-export default class DataService {
-  constructor(storage) {
-    this.storage = storage || localStorage;
-  }
+function isThreadKey(key) {
+  return key.startsWith('thread.');
+}
 
+function extractIdFromThreadKey(key) {
+  return parseInt(key.substr('thread.'.length), 10);
+}
+
+function threadKey(id) {
+  return `thread.${id}`;
+}
+
+export default class DataService {
   static build() {
     return new DataService();
   }
@@ -11,17 +19,78 @@ export default class DataService {
     return new DataService(storage);
   }
 
-  save(message) {
-    this.storage.lastText = message;
+  constructor(storage) {
+    this.storage = storage || localStorage;
   }
-  clear() {
-    this.storage.lastText = '';
+
+  set _currentThreadId(threadId) {
+    this.storage.currentThreadId = threadId;
   }
-  load() {
+
+  get _currentThreadId() {
+    if (!this.storage.currentThreadId) {
+      this._currentThreadId = 0;
+    }
+    return parseInt(this.storage.currentThreadId, 10);
+  }
+
+  get _currentThreadKey() {
+    return threadKey(this._currentThreadId);
+  }
+
+  migrate() {
     if (this.storage.lastText) {
-      return this.storage.lastText;
+      this.save(this.storage.lastText);
+
+      delete this.storage.lastText;
     }
 
-    return '';
+    this.storage['rtw.version'] = '1.1';
+  }
+
+  save(message) {
+    this.storage[this._currentThreadKey] = message;
+  }
+
+  clear(threadId) {
+    delete this.storage[threadKey(threadId)];
+  }
+
+  newThread() {
+    const currentMaxThreadId = Object.entries(this.storage)
+      .reduce((lastMaxThreadId, entry) => {
+        if (isThreadKey(entry[0])) {
+          const id = extractIdFromThreadKey(entry[0]);
+          if (id > lastMaxThreadId) {
+            return id;
+          }
+        }
+
+        return lastMaxThreadId;
+      }, this._currentThreadId);
+
+    this._currentThreadId = currentMaxThreadId + 1;
+    this.save('');
+  }
+
+  load() {
+    const lastText = this.storage[`thread.${this._currentThreadId}`];
+    return lastText || '';
+  }
+
+  threadList() {
+    return Object.entries(this.storage)
+      .filter(entry => isThreadKey(entry[0]))
+      .map(([key, val]) => {
+        const id = extractIdFromThreadKey(key);
+        return {
+          id,
+          text: val,
+        };
+      });
+  }
+
+  setCurrentThread(threadId) {
+    this._currentThreadId = threadId;
   }
 }

@@ -1,3 +1,6 @@
 import DataService from './DataService';
 
-export default new DataService();
+const dataService = new DataService();
+dataService.migrate();
+
+export default dataService;
