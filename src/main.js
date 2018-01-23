@@ -7,6 +7,7 @@ import FunctionWrap from './components/FunctionWrap';
 import RtwButton from './components/RtwButton';
 import RtwLink from './components/RtwLink';
 import RtwRouterLink from './components/RtwRouterLink';
+import RtwPostSubmit from './components/RtwPostSubmit';
 
 Vue.config.productionTip = false;
 
@@ -14,6 +15,7 @@ Vue.component(FunctionWrap.name, FunctionWrap);
 Vue.component(RtwButton.name, RtwButton);
 Vue.component(RtwLink.name, RtwLink);
 Vue.component(RtwRouterLink.name, RtwRouterLink);
+Vue.component(RtwPostSubmit.name, RtwPostSubmit);
 
 /* eslint-disable no-new */
 new Vue({

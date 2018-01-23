@@ -12,3 +12,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.button {
+  padding: 10px;
+}
+</style>

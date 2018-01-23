@@ -7,6 +7,12 @@
     <rtw-link :href="tweetIntentUrl" target="TweetWindow">tweet</rtw-link>
     <rtw-button @click="newThread">New Text</rtw-button>
     <rtw-router-link to="/threads">Thread List</rtw-router-link>
+    <rtw-post-submit
+      action="http://small.dic.daum.net/grammar_checker.do"
+      target="grammer_check"
+      :value="grammerCheckValue"
+      submitText="Grammer"
+    ></rtw-post-submit>
   </function-wrap>
 </div>
 </template>
@@ -26,6 +32,12 @@ export default {
   computed: {
     tweetIntentUrl() {
       return `https://twitter.com/intent/tweet?text=${encodeURIComponent(this.message)}`;
+    },
+    grammerCheckValue() {
+      return {
+        name: 'sentence',
+        value: this.message,
+      };
     },
   },
 
