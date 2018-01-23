@@ -1,13 +1,14 @@
 <template>
 <div class="wrap">
   <div class="box">
-    <textarea class="text" v-model="message" placeholder="tweet contents"></textarea>
+    <textarea ref="textarea" class="text" v-model="message" placeholder="tweet contents"></textarea>
   </div>
   <function-wrap>
     <rtw-link :href="tweetIntentUrl" target="TweetWindow">tweet</rtw-link>
     <rtw-button @click="newThread">New Text</rtw-button>
     <rtw-router-link to="/threads">Thread List</rtw-router-link>
     <rtw-post-submit
+      @click="beforeOpenGrammerCheck"
       action="http://small.dic.daum.net/grammar_checker.do"
       target="grammer_check"
       :value="grammerCheckValue"
@@ -51,6 +52,9 @@ export default {
     newThread() {
       DataService.newThread();
       this.message = DataService.load();
+    },
+    beforeOpenGrammerCheck() {
+      this.$refs.textarea.select();
     },
   },
 };
