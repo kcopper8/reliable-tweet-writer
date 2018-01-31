@@ -10,6 +10,10 @@ function threadKey(id) {
   return `thread.${id}`;
 }
 
+function replyIdKey(id) {
+  return `replyId.${id}`;
+}
+
 export default class DataService {
   static build() {
     return new DataService();
@@ -52,8 +56,21 @@ export default class DataService {
     this.storage[this._currentThreadKey] = message;
   }
 
+  saveReplyId(replyId) {
+    this.storage[replyIdKey(this._currentThreadId)] = replyId;
+  }
+
+  loadReplyId() {
+    return this.storage[replyIdKey(this._currentThreadId)];
+  }
+
+  removeReplyId() {
+    delete this.storage[replyIdKey(this._currentThreadId)];
+  }
+
   clear(threadId) {
     delete this.storage[threadKey(threadId)];
+    delete this.storage[replyIdKey(threadId)];
   }
 
   newThread() {

@@ -3,23 +3,19 @@
   <div class="box">
     <textarea ref="textarea" class="text" v-model="message" placeholder="tweet contents"></textarea>
   </div>
-  <function-wrap>
-    <rtw-link :href="tweetIntentUrl" target="TweetWindow">tweet</rtw-link>
-    <rtw-button @click="newThread">New Text</rtw-button>
-    <rtw-router-link to="/threads">Thread List</rtw-router-link>
-    <rtw-post-submit
-      @click="beforeOpenGrammerCheck"
-      action="http://small.dic.daum.net/grammar_checker.do"
-      target="grammer_check"
-      :value="grammerCheckValue"
-      submitText="Grammer"
-    ></rtw-post-submit>
-  </function-wrap>
+  <rtw-editor-function
+    :tweetIntentUrl="tweetIntentUrl"
+    :grammerCheckValue="grammerCheckValue"
+    @newThread="newThread"
+    @beforeOpenGrammerCheck="beforeOpenGrammerCheck"
+  />
+  <strong class="bottomRight" v-if="replyId">Reply</strong>
 </div>
 </template>
 
 <script>
 import DataService from '@/service/DataServiceHolder';
+import RtwEditorFunction from './RtwEditorFunction';
 
 export default {
   name: 'Editor',
@@ -27,12 +23,17 @@ export default {
   data() {
     return {
       message: DataService.load(),
+      replyId: DataService.loadReplyId(),
     };
   },
 
   computed: {
     tweetIntentUrl() {
-      return `https://twitter.com/intent/tweet?text=${encodeURIComponent(this.message)}`;
+      let inReplyTo = '';
+      if (this.replyId) {
+        inReplyTo = `&in_reply_to=${this.replyId}`;
+      }
+      return `https://twitter.com/intent/tweet?text=${encodeURIComponent(this.message)}${inReplyTo}`;
     },
     grammerCheckValue() {
       return {
@@ -57,6 +58,10 @@ export default {
       this.$refs.textarea.select();
     },
   },
+
+  components: {
+    RtwEditorFunction,
+  },
 };
 </script>
 
@@ -74,5 +79,12 @@ export default {
 .text {
   width: 100%;
   height: 100%;
+}
+
+.bottomRight {
+  position: fixed;
+  display: block;
+  right: 10px;
+  bottom: 10px;
 }
 </style>

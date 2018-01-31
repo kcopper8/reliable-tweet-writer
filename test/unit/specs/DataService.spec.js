@@ -104,6 +104,46 @@ describe('DataService', () => {
 
       expect(dataService.threadList()).toHaveLength(3);
     });
+    it('reply id 를 저장할 수 있어야 한다.', () => {
+      const { dataService } = testSuit();
+
+      dataService.save('hello');
+      dataService.saveReplyId('958713389915631616');
+      expect(dataService.load()).toBe('hello');
+      expect(dataService.loadReplyId()).toBe('958713389915631616');
+    });
+    it('reply id 는 thread 에 따라 따로 저장되어야 한다..', () => {
+      const { dataService } = testSuit();
+
+      dataService.save('hello');
+      dataService.saveReplyId('958713389915631616');
+      dataService.newThread();
+      dataService.save('hello2');
+      expect(dataService.loadReplyId()).toBeFalsy();
+
+      const previousThread = dataService.threadList().find(({ text }) => text === 'hello');
+      dataService.setCurrentThread(previousThread.id);
+      expect(dataService.loadReplyId()).toBe('958713389915631616');
+    });
+    it('reply id 는 clear 때 같이 사라져야 한다.', () => {
+      const { dataService } = testSuit();
+
+      dataService.save('hello');
+      dataService.saveReplyId('958713389915631616');
+      const previousThread = dataService.threadList().find(({ text }) => text === 'hello');
+      dataService.clear(previousThread.id);
+      dataService.setCurrentThread(previousThread.id);
+      expect(dataService.loadReplyId()).toBeFalsy();
+    });
+    it('reply id 만 지울 수 있다.', () => {
+      const { dataService } = testSuit();
+
+      dataService.save('hello');
+      dataService.saveReplyId('958713389915631616');
+      dataService.removeReplyId();
+      expect(dataService.loadReplyId()).toBeFalsy();
+      expect(dataService.load()).toBe('hello');
+    });
   });
 
   describe('migration', () => {
