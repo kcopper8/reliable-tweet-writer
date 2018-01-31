@@ -15,6 +15,15 @@
 import DataService from '@/service/DataServiceHolder';
 import router from '@/router';
 
+function extractTweetId(url) {
+  const result = /^(?:https:\/\/)?twitter.com\/[^/]+\/status\/(\d+)$/.exec(url);
+  if (result) {
+    return result[1];
+  }
+
+  return url;
+}
+
 export default {
   data() {
     return {
@@ -36,6 +45,11 @@ export default {
       DataService.removeReplyId();
       this.toReplyTweet = DataService.loadReplyId();
       router.push('/');
+    },
+  },
+  watch: {
+    toReplyTweet() {
+      this.toReplyTweet = extractTweetId(this.toReplyTweet);
     },
   },
 };
