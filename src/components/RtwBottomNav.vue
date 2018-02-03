@@ -1,7 +1,7 @@
 <template>
   <v-bottom-nav app value="true" color="light-blue">
     <v-btn value="Editor" to="/" exact color="white" dark>
-      <span>New</span>
+      <span>Editor</span>
       <v-icon>create</v-icon>
     </v-btn>
     <v-btn value="ThreadList" to="/threads" dark>
