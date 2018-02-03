@@ -1,9 +1,7 @@
 <template>
-  <div id="wrap">
-    <div class="layout">
-    <router-view/>
-    </div>
-  </div>
+<v-app>
+  <router-view/>
+</v-app>
 </template>
 
 <script>
@@ -11,33 +9,3 @@ export default {
   name: 'App',
 };
 </script>
-
-<style>
-* {
-  box-sizing: border-box;
-}
-
-html,body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-}
-
-#wrap {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-  margin: 0;
-  padding: 0 10px;
-  height: 100%;
-  overflow: hidden;
-}
-
-.layout {
-  height: 100%;
-  padding-bottom: 60px;
-  overflow: hidden;
-}
-</style>

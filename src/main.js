@@ -1,21 +1,20 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
+import Vuetify from 'vuetify';
 import App from './App';
 import router from './router';
-import FunctionWrap from './components/FunctionWrap';
-import RtwButton from './components/RtwButton';
-import RtwLink from './components/RtwLink';
-import RtwRouterLink from './components/RtwRouterLink';
-import RtwPostSubmit from './components/RtwPostSubmit';
+import RtwForm from './components/RtwForm';
+import RtwBottomNav from './components/RtwBottomNav';
+
+import('../node_modules/vuetify/dist/vuetify.min.css');
 
 Vue.config.productionTip = false;
 
-Vue.component(FunctionWrap.name, FunctionWrap);
-Vue.component(RtwButton.name, RtwButton);
-Vue.component(RtwLink.name, RtwLink);
-Vue.component(RtwRouterLink.name, RtwRouterLink);
-Vue.component(RtwPostSubmit.name, RtwPostSubmit);
+Vue.component(RtwForm.name, RtwForm);
+Vue.component(RtwBottomNav.name, RtwBottomNav);
+
+Vue.use(Vuetify);
 
 /* eslint-disable no-new */
 new Vue({

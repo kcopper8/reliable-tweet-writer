@@ -1,19 +1,27 @@
 <template>
-  <div>
-    <h1>Set Reply</h1>
-    <textarea v-model="toReplyTweet" ></textarea>
-    <span>{{validText}}</span>
-    <div>
-      <rtw-button @click="confirm" :disabled="!valid">confirm</rtw-button>
-      <rtw-button @click="remove" :disabled="!valid">remove</rtw-button>
-      <rtw-router-link to="/">back to editor</rtw-router-link>
-    </div>
-  </div>
+  <v-dialog persistent v-model="open">
+    <v-card>
+      <v-card-title>
+        <span class="headline">Reply</span>
+      </v-card-title>
+      <v-card-text>
+        <v-text-field
+              label="tweet to reply"
+              multi-line
+              v-model="toReplyTweet"
+        ></v-text-field>
+      </v-card-text>
+      <v-card-actions>
+        <v-btn flat color="error" @click="remove">Remove</v-btn>
+        <v-spacer />
+        <v-btn flat color="primary" @click="confirm">Confirm</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>
 import DataService from '@/service/DataServiceHolder';
-import router from '@/router';
 
 function extractTweetId(url) {
   const result = /^(?:https:\/\/)?twitter.com\/[^/]+\/status\/(\d+)$/.exec(url);
@@ -28,6 +36,7 @@ export default {
   data() {
     return {
       toReplyTweet: DataService.loadReplyId(),
+      open: true,
       validText: '',
     };
   },
@@ -38,13 +47,15 @@ export default {
   },
   methods: {
     confirm() {
-      DataService.saveReplyId(this.toReplyTweet);
-      router.push('/');
+      if (this.toReplyTweet) {
+        DataService.saveReplyId(this.toReplyTweet);
+      }
+      this.$emit('close');
     },
     remove() {
       DataService.removeReplyId();
       this.toReplyTweet = DataService.loadReplyId();
-      router.push('/');
+      this.$emit('close');
     },
   },
   watch: {
@@ -55,9 +66,6 @@ export default {
 };
 </script>
 
-<style scoped>
-textarea {
-  width: 100%;
-  height: 100px;
-}
+<style>
+
 </style>

@@ -1,25 +1,33 @@
 <template>
-<div class="scroll">
-  <h1>Thread List</h1>
-  <ul class="threads">
-    <item
-      v-for="thread in threadList"
-      v-bind:key="thread.id"
-      :thread="thread"
-      @load="load(thread.id)"
-      @clear="clear(thread.id)"
-    ></item>
-  </ul>
-<function-wrap>
-  <rtw-router-link to="/">Editor</rtw-router-link>
-</function-wrap>
+<div>
+  <v-toolbar app>
+    <v-toolbar-title>Thread List</v-toolbar-title>
+  </v-toolbar>
+  <v-content>
+    <v-list>
+      <v-list-tile
+        v-for="thread in threadList"
+        v-bind:key="thread.id"
+        @click="load(thread.id)"
+      >
+        <v-list-tile-content>
+          <v-list-tile-title>{{thread.text}}</v-list-tile-title>
+        </v-list-tile-content>
+        <v-list-tile-action>
+          <v-btn icon @click="clear(thread.id)">
+            <v-icon large>delete</v-icon>
+          </v-btn>
+        </v-list-tile-action>
+      </v-list-tile>
+    </v-list>
+  </v-content>
+  <rtw-bottom-nav />
 </div>
 </template>
 
 <script>
 import dataService from '@/service/DataServiceHolder';
 import router from '@/router';
-import ThreadListItem from './ThreadListItem';
 
 export default {
   name: 'ThreadList',
@@ -28,10 +36,6 @@ export default {
     return {
       threadList: dataService.threadList(),
     };
-  },
-
-  components: {
-    item: ThreadListItem,
   },
 
   methods: {

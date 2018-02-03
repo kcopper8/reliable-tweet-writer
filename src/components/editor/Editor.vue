@@ -1,21 +1,45 @@
 <template>
-<div class="wrap">
-  <div class="box">
-    <textarea ref="textarea" class="text" v-model="message" placeholder="tweet contents"></textarea>
+  <div>
+    <rtw-editor-toolbar
+      :tweetIntentUrl="tweetIntentUrl"
+      @setReply="replyDialog = true"
+      @grammer="grammer"
+      @newThread="newThread"
+    />
+    <rtw-reply-dialog v-if="replyDialog" @close="closeReplyDialog" />
+    <v-content>
+      <v-subheader v-if="replyId">
+        <span>Reply to {{replyId}}</span>
+        <v-spacer />
+        <v-btn icon @click="removeReplyId">
+          <v-icon>delete</v-icon>
+        </v-btn>
+      </v-subheader>
+      <v-text-field
+        label="Tweet Contents"
+        multi-line
+        v-model="message"
+        ref="textarea"
+        autofocus
+        auto-grow
+        solo
+      ></v-text-field>
+      <rtw-form
+        ref="postSubmit"
+        action="http://small.dic.daum.net/grammar_checker.do"
+        target="grammer_check"
+        name="sentence"
+        :value="message"
+      />
+    </v-content>
+    <rtw-bottom-nav />
   </div>
-  <rtw-editor-function
-    :tweetIntentUrl="tweetIntentUrl"
-    :grammerCheckValue="grammerCheckValue"
-    @newThread="newThread"
-    @beforeOpenGrammerCheck="beforeOpenGrammerCheck"
-  />
-  <strong class="bottomRight" v-if="replyId">Reply</strong>
-</div>
 </template>
 
 <script>
 import DataService from '@/service/DataServiceHolder';
-import RtwEditorFunction from './RtwEditorFunction';
+import RtwReplyDialog from '@/components/reply/RtwReplyDialog';
+import RtwEditorToolbar from './RtwEditorToolbar';
 
 export default {
   name: 'Editor',
@@ -24,6 +48,7 @@ export default {
     return {
       message: DataService.load(),
       replyId: DataService.loadReplyId(),
+      replyDialog: false,
     };
   },
 
@@ -54,37 +79,22 @@ export default {
       DataService.newThread();
       this.message = DataService.load();
     },
-    beforeOpenGrammerCheck() {
-      this.$refs.textarea.select();
+    grammer() {
+      this.$refs.postSubmit.submit();
+    },
+    removeReplyId() {
+      DataService.removeReplyId();
+      this.replyId = DataService.loadReplyId();
+    },
+    closeReplyDialog() {
+      this.replyDialog = false;
+      this.replyId = DataService.loadReplyId();
     },
   },
 
   components: {
-    RtwEditorFunction,
+    RtwEditorToolbar,
+    RtwReplyDialog,
   },
 };
 </script>
-
-<style scoped>
-.wrap {
-  width: 100%;
-  height: 100%;
-}
-
-.box {
-  padding: 10px 0;
-  height: 100%;
-}
-
-.text {
-  width: 100%;
-  height: 100%;
-}
-
-.bottomRight {
-  position: fixed;
-  display: block;
-  right: 10px;
-  bottom: 10px;
-}
-</style>
