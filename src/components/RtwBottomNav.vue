@@ -1,10 +1,10 @@
 <template>
-  <v-bottom-nav value="true">
-    <v-btn value="Editor" to="/" exact>
+  <v-bottom-nav app value="true" color="light-blue">
+    <v-btn value="Editor" to="/" exact color="white" dark>
       <span>New</span>
       <v-icon>create</v-icon>
     </v-btn>
-    <v-btn value="ThreadList" to="/threads">
+    <v-btn value="ThreadList" to="/threads" dark>
       <span>Threads</span>
       <v-badge>
         <v-icon>view_list</v-icon>

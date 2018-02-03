@@ -9,11 +9,11 @@
     <rtw-reply-dialog v-if="replyDialog" @close="closeReplyDialog" />
     <v-content>
       <v-subheader v-if="replyId">
-        <span>Reply to {{replyId}}</span>
-        <v-spacer />
-        <v-btn icon @click="removeReplyId">
-          <v-icon>delete</v-icon>
-        </v-btn>
+          <span>Reply to {{replyId}}</span>
+          <v-spacer />
+          <v-btn icon @click="removeReplyId">
+            <v-icon>delete</v-icon>
+          </v-btn>
       </v-subheader>
       <v-text-field
         label="Tweet Contents"
@@ -22,7 +22,6 @@
         ref="textarea"
         autofocus
         auto-grow
-        solo
       ></v-text-field>
       <rtw-form
         ref="postSubmit"

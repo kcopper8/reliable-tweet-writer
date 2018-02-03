@@ -1,6 +1,6 @@
 <template>
 <div>
-  <v-toolbar app>
+  <v-toolbar app dense color="light-blue" dark>
     <v-toolbar-title>Thread List</v-toolbar-title>
   </v-toolbar>
   <v-content>

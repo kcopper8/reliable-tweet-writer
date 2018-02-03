@@ -1,8 +1,8 @@
 <template>
-  <v-toolbar app dense>
+  <v-toolbar app dense color="light-blue" dark>
     <v-toolbar-title>Editor</v-toolbar-title>
     <v-spacer />
-    <v-btn icon :href="tweetIntentUrl" color="primary">
+    <v-btn icon :href="tweetIntentUrl">
       <i aria-hidden="true" class="fab icon fa-twitter"></i>
     </v-btn>
     <v-menu bottom left>
