@@ -14,7 +14,7 @@
           <v-list-tile-title>{{thread.text}}</v-list-tile-title>
         </v-list-tile-content>
         <v-list-tile-action>
-          <v-btn icon @click="clear(thread.id)">
+          <v-btn icon @click.stop="clear(thread.id)">
             <v-icon large>delete</v-icon>
           </v-btn>
         </v-list-tile-action>
