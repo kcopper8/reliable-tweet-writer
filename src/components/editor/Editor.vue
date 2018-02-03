@@ -74,20 +74,24 @@ export default {
   },
 
   methods: {
+    refreshData() {
+      this.message = DataService.load();
+      this.replyId = DataService.loadReplyId();
+      this.replyDialog = false;
+    },
     newThread() {
       DataService.newThread();
-      this.message = DataService.load();
+      this.refreshData();
     },
     grammer() {
       this.$refs.postSubmit.submit();
     },
     removeReplyId() {
       DataService.removeReplyId();
-      this.replyId = DataService.loadReplyId();
+      this.refreshData();
     },
     closeReplyDialog() {
-      this.replyDialog = false;
-      this.replyId = DataService.loadReplyId();
+      this.refreshData();
     },
   },
 
