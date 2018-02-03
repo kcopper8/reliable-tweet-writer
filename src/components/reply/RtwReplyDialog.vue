@@ -6,15 +6,15 @@
       </v-card-title>
       <v-card-text>
         <v-text-field
-              label="tweet to reply"
-              multi-line
-              v-model="toReplyTweet"
+            label="tweet to reply"
+            multi-line
+            v-model="toReplyTweet"
         ></v-text-field>
       </v-card-text>
       <v-card-actions>
         <v-btn flat color="error" @click="remove">Remove</v-btn>
         <v-spacer />
-        <v-btn flat color="primary" @click="confirm">Confirm</v-btn>
+        <v-btn flat color="primary" @click="confirm" :disabled="!valid">Confirm</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -22,15 +22,7 @@
 
 <script>
 import DataService from '@/service/DataServiceHolder';
-
-function extractTweetId(url) {
-  const result = /^(?:https:\/\/)?twitter.com\/[^/]+\/status\/(\d+)$/.exec(url);
-  if (result) {
-    return result[1];
-  }
-
-  return url;
-}
+import extractTweetId from '@/service/extractTweetId';
 
 export default {
   data() {
