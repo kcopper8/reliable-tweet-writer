@@ -2,9 +2,12 @@
   <v-toolbar app dense color="light-blue" dark>
     <v-toolbar-title>Editor</v-toolbar-title>
     <v-spacer />
-    <v-btn icon :href="tweetIntentUrl">
-      <i aria-hidden="true" class="fab icon fa-twitter"></i>
-    </v-btn>
+    <v-tooltip left>
+      <v-btn icon :href="tweetIntentUrl" slot="activator">
+        <i aria-hidden="true" class="fab icon fa-twitter"></i>
+      </v-btn>
+      <span>Tweet</span>
+    </v-tooltip>
     <v-menu bottom left>
       <v-btn icon slot="activator">
         <v-icon>more_vert</v-icon>
