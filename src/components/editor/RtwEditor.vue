@@ -41,7 +41,7 @@ import RtwReplyDialog from '@/components/reply/RtwReplyDialog';
 import RtwEditorToolbar from './RtwEditorToolbar';
 
 export default {
-  name: 'Editor',
+  name: 'rtw-editor',
 
   data() {
     return {

@@ -30,7 +30,7 @@ import dataService from '@/service/DataServiceHolder';
 import router from '@/router';
 
 export default {
-  name: 'ThreadList',
+  name: 'rtw-thread-list',
 
   data() {
     return {
@@ -50,13 +50,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.scroll {
-  height: 100%;
-  overflow: scroll;
-}
-.threads {
-  padding: 0;
-}
-</style>

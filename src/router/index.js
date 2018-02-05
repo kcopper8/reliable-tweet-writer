@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Editor from '@/components/editor/Editor';
-import ThreadList from '@/components/threads/ThreadList';
+import RtwEditor from '@/components/editor/RtwEditor';
+import RtwThreadList from '@/components/threads/RtwThreadList';
 
 Vue.use(Router);
 
@@ -9,13 +9,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Editor',
-      component: Editor,
+      name: RtwEditor.name,
+      component: RtwEditor,
     },
     {
       path: '/threads',
-      name: 'ThreadList',
-      component: ThreadList,
+      name: RtwThreadList.name,
+      component: RtwThreadList,
     },
   ],
 });
