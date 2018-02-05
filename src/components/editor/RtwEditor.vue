@@ -8,28 +8,34 @@
     />
     <rtw-reply-dialog v-if="replyDialog" @close="closeReplyDialog" />
     <v-content>
-      <v-subheader v-if="replyId">
-          <span>Reply to {{replyId}}</span>
-          <v-spacer />
-          <v-btn icon @click="removeReplyId">
-            <v-icon>delete</v-icon>
-          </v-btn>
-      </v-subheader>
-      <v-text-field
-        label="Tweet Contents"
-        multi-line
-        v-model="message"
-        ref="textarea"
-        autofocus
-        auto-grow
-      ></v-text-field>
-      <rtw-form
-        ref="postSubmit"
-        action="http://small.dic.daum.net/grammar_checker.do"
-        target="grammer_check"
-        name="sentence"
-        :value="message"
-      />
+      <v-container fluid>
+        <v-layout>
+          <v-flex>
+          <v-subheader v-if="replyId">
+              <span>Reply to {{replyId}}</span>
+              <v-spacer />
+              <v-btn icon @click="removeReplyId">
+                <v-icon>delete</v-icon>
+              </v-btn>
+          </v-subheader>
+          <v-text-field
+            label="Tweet Contents"
+            multi-line
+            v-model="message"
+            ref="textarea"
+            autofocus
+            auto-grow
+          ></v-text-field>
+          <rtw-form
+            ref="postSubmit"
+            action="http://small.dic.daum.net/grammar_checker.do"
+            target="grammer_check"
+            name="sentence"
+            :value="message"
+          />
+          </v-flex>
+        </v-layout>
+      </v-container>
     </v-content>
     <rtw-bottom-nav />
   </div>
