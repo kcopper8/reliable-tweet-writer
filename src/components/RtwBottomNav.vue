@@ -15,14 +15,13 @@
 </template>
 
 <script>
-import DataService from '@/service/DataServiceHolder';
 
 export default {
   name: 'rtw-bottom-nav',
-  data() {
-    return {
-      threadCount: DataService.threadList().length,
-    };
+  computed: {
+    threadCount() {
+      return this.$store.state.threads.length;
+    },
   },
 };
 </script>

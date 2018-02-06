@@ -11,8 +11,8 @@
       <v-container fluid>
         <v-layout>
           <v-flex>
-          <v-subheader v-if="replyId">
-              <span>Reply to {{replyId}}</span>
+          <v-subheader v-if="editing.replyId">
+              <span>Reply to {{editing.replyId}}</span>
               <v-spacer />
               <v-btn icon @click="removeReplyId">
                 <v-icon>delete</v-icon>
@@ -21,7 +21,8 @@
           <v-text-field
             label="Tweet Contents"
             multi-line
-            v-model="message"
+            :value="editing.text"
+            @input="updateMessage"
             ref="textarea"
             autofocus
             auto-grow
@@ -31,7 +32,7 @@
             action="http://small.dic.daum.net/grammar_checker.do"
             target="grammer_check"
             name="sentence"
-            :value="message"
+            :value="editing.text"
           />
           </v-flex>
         </v-layout>
@@ -42,7 +43,7 @@
 </template>
 
 <script>
-import DataService from '@/service/DataServiceHolder';
+import { mapGetters } from 'vuex';
 import RtwReplyDialog from '@/components/reply/RtwReplyDialog';
 import RtwEditorToolbar from './RtwEditorToolbar';
 
@@ -51,8 +52,6 @@ export default {
 
   data() {
     return {
-      message: DataService.load(),
-      replyId: DataService.loadReplyId(),
       replyDialog: false,
     };
   },
@@ -60,41 +59,32 @@ export default {
   computed: {
     tweetIntentUrl() {
       let inReplyTo = '';
-      if (this.replyId) {
-        inReplyTo = `&in_reply_to=${this.replyId}`;
+      if (this.editing.replyId) {
+        inReplyTo = `&in_reply_to=${this.editing.replyId}`;
       }
-      return `https://twitter.com/intent/tweet?text=${encodeURIComponent(this.message)}${inReplyTo}`;
+      const encodedMessage = encodeURIComponent(this.editing.text);
+      return `https://twitter.com/intent/tweet?text=${encodedMessage}${inReplyTo}`;
     },
-    grammerCheckValue() {
-      return {
-        name: 'sentence',
-        value: this.message,
-      };
-    },
-  },
-
-  watch: {
-    message(message) {
-      DataService.save(message);
-    },
+    ...mapGetters([
+      'editing',
+    ]),
   },
 
   methods: {
+    updateMessage(value) {
+      this.$store.commit('setCurrentThreadText', value);
+    },
     refreshData() {
-      this.message = DataService.load();
-      this.replyId = DataService.loadReplyId();
       this.replyDialog = false;
     },
     newThread() {
-      DataService.newThread();
-      this.refreshData();
+      this.$store.commit('newThread');
     },
     grammer() {
       this.$refs.postSubmit.submit();
     },
     removeReplyId() {
-      DataService.removeReplyId();
-      this.refreshData();
+      this.$store.commit('setCurrentThreadReplyId', null);
     },
     closeReplyDialog() {
       this.refreshData();

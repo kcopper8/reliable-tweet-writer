@@ -26,26 +26,27 @@
 </template>
 
 <script>
-import dataService from '@/service/DataServiceHolder';
 import router from '@/router';
 
 export default {
   name: 'rtw-thread-list',
 
-  data() {
-    return {
-      threadList: dataService.threadList(),
-    };
+  computed: {
+    threadList() {
+      return this.$store.state.threads;
+    },
+    editingIndex() {
+      return this.$store.state.editingIndex;
+    },
   },
 
   methods: {
     load(threadId) {
-      dataService.setCurrentThread(threadId);
+      this.$store.commit('setCurrent', threadId);
       router.push('/');
     },
     clear(threadId) {
-      dataService.clear(threadId);
-      this.threadList = dataService.threadList();
+      this.$store.commit('delete', threadId);
     },
   },
 };

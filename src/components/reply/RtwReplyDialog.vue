@@ -21,13 +21,12 @@
 </template>
 
 <script>
-import DataService from '@/service/DataServiceHolder';
 import extractTweetId from '@/service/extractTweetId';
 
 export default {
   data() {
     return {
-      toReplyTweet: DataService.loadReplyId(),
+      toReplyTweet: this.$store.getters.editing.replyId,
       open: true,
       validText: '',
     };
@@ -40,13 +39,12 @@ export default {
   methods: {
     confirm() {
       if (this.toReplyTweet) {
-        DataService.saveReplyId(this.toReplyTweet);
+        this.$store.commit('setCurrentThreadReplyId', this.toReplyTweet);
       }
       this.$emit('close');
     },
     remove() {
-      DataService.removeReplyId();
-      this.toReplyTweet = DataService.loadReplyId();
+      this.$store.commit('setCurrentThreadReplyId', null);
       this.$emit('close');
     },
   },
