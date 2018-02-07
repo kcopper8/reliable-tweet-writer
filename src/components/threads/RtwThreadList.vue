@@ -9,9 +9,13 @@
         v-for="thread in threadList"
         v-bind:key="thread.id"
         @click="load(thread.id)"
+        v-model="thread.isActive"
       >
         <v-list-tile-content>
-          <v-list-tile-title>{{thread.text}}</v-list-tile-title>
+          <v-list-tile-title>
+            <strong v-if="thread.replyId">Re:</strong>
+            {{thread.text}}
+          </v-list-tile-title>
         </v-list-tile-content>
         <v-list-tile-action>
           <v-btn icon @click.stop="clear(thread.id)">
@@ -33,7 +37,9 @@ export default {
 
   computed: {
     threadList() {
-      return this.$store.state.threads;
+      return this.$store.state.threads.map(thread => Object.assign({
+        isActive: thread.id === this.editingIndex,
+      }, thread));
     },
     editingIndex() {
       return this.$store.state.editingIndex;
