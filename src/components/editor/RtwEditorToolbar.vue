@@ -2,6 +2,9 @@
   <v-toolbar app dense color="light-blue" dark>
     <v-toolbar-title>Editor</v-toolbar-title>
     <v-spacer />
+    <v-btn icon @click="$emit('selectAll')">
+      <v-icon>select_all</v-icon>
+    </v-btn>
     <v-tooltip left>
       <v-btn icon :href="tweetIntentUrl" slot="activator">
         <i aria-hidden="true" class="fab icon fa-twitter"></i>

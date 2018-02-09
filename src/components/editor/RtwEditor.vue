@@ -5,6 +5,7 @@
       @setReply="replyDialog = true"
       @grammer="grammer"
       @newThread="newThread"
+      @selectAll="selectAll"
     />
     <rtw-reply-dialog v-if="replyDialog" @close="closeReplyDialog" />
     <v-content>
@@ -88,6 +89,9 @@ export default {
     },
     closeReplyDialog() {
       this.refreshData();
+    },
+    selectAll() {
+      this.$refs.textarea.$refs.input.select();
     },
   },
 
