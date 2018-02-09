@@ -8,6 +8,7 @@
         <v-text-field
             label="tweet to reply"
             multi-line
+            rows="2"
             v-model="toReplyTweet"
         ></v-text-field>
       </v-card-text>
