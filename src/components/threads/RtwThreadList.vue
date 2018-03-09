@@ -1,5 +1,5 @@
 <template>
-<div>
+<v-app>
   <v-toolbar app dense color="light-blue" dark>
     <v-toolbar-title>Thread List</v-toolbar-title>
   </v-toolbar>
@@ -26,7 +26,7 @@
     </v-list>
   </v-content>
   <rtw-bottom-nav />
-</div>
+</v-app>
 </template>
 
 <script>

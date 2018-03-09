@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-app>
     <rtw-editor-toolbar
       :tweetIntentUrl="tweetIntentUrl"
       @setReply="replyDialog = true"
@@ -9,38 +9,43 @@
     />
     <rtw-reply-dialog v-if="replyDialog" @close="closeReplyDialog" />
     <v-content>
-      <v-container fluid>
-        <v-layout>
+      <v-container fluid fill-height pa-0>
+        <v-layout column>
           <v-flex>
-          <v-subheader v-if="editing.replyId">
-              <span>Reply to {{editing.replyId}}</span>
-              <v-spacer />
-              <v-btn icon @click="removeReplyId">
-                <v-icon>delete</v-icon>
-              </v-btn>
-          </v-subheader>
-          <v-text-field
-            label="Tweet Contents"
-            multi-line
-            :value="editing.text"
-            @input="updateMessage"
-            ref="textarea"
-            autofocus
-            auto-grow
-          ></v-text-field>
-          <rtw-form
-            ref="postSubmit"
-            action="http://small.dic.daum.net/grammar_checker.do"
-            target="grammer_check"
-            name="sentence"
-            :value="editing.text"
-          />
+            <v-subheader v-if="editing.replyId">
+                <span>Reply to {{editing.replyId}}</span>
+                <v-spacer />
+                <v-btn icon @click="removeReplyId">
+                  <v-icon>delete</v-icon>
+                </v-btn>
+            </v-subheader>
+          </v-flex>
+          <v-flex fill-height>
+            <v-text-field
+              class="editext"
+              style="height:100%"
+              hide-details
+              full-width
+              label="Tweet Contents"
+              multi-line
+              :value="editing.text"
+              @input="updateMessage"
+              ref="textarea"
+              autofocus
+            ></v-text-field>
+            <rtw-form
+              ref="postSubmit"
+              action="http://small.dic.daum.net/grammar_checker.do"
+              target="grammer_check"
+              name="sentence"
+              :value="editing.text"
+            />
           </v-flex>
         </v-layout>
       </v-container>
     </v-content>
     <rtw-bottom-nav />
-  </div>
+  </v-app>
 </template>
 
 <script>
@@ -101,3 +106,14 @@ export default {
   },
 };
 </script>
+
+<style>
+.editext {
+  height: 100%;
+}
+
+.editext .input-group__details {
+  display: none;
+}
+</style>
+
