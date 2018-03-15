@@ -8,6 +8,7 @@
       @selectAll="selectAll"
     />
     <rtw-reply-dialog v-if="replyDialog" @close="closeReplyDialog" />
+    <rtw-check-grammer-dialog v-if="grammerDialog" :open.sync="grammerDialog" />
     <v-content>
       <v-container fluid fill-height pa-0>
         <v-layout column>
@@ -33,13 +34,6 @@
               ref="textarea"
               autofocus
             ></v-text-field>
-            <rtw-form
-              ref="postSubmit"
-              action="http://small.dic.daum.net/grammar_checker.do"
-              target="grammer_check"
-              name="sentence"
-              :value="editing.text"
-            />
           </v-flex>
         </v-layout>
       </v-container>
@@ -51,7 +45,9 @@
 <script>
 import { mapGetters } from 'vuex';
 import RtwReplyDialog from '@/components/reply/RtwReplyDialog';
+import RtwCheckGrammerDialog from '@/components/grammer/RtwCheckGrammerDialog';
 import RtwEditorToolbar from './RtwEditorToolbar';
+
 
 export default {
   name: 'rtw-editor',
@@ -59,6 +55,7 @@ export default {
   data() {
     return {
       replyDialog: false,
+      grammerDialog: false,
     };
   },
 
@@ -87,7 +84,7 @@ export default {
       this.$store.commit('newThread');
     },
     grammer() {
-      this.$refs.postSubmit.submit();
+      this.grammerDialog = true;
     },
     removeReplyId() {
       this.$store.commit('setCurrentThreadReplyId', null);
@@ -103,6 +100,7 @@ export default {
   components: {
     RtwEditorToolbar,
     RtwReplyDialog,
+    RtwCheckGrammerDialog,
   },
 };
 </script>

@@ -17,6 +17,7 @@
     "clean-source": "rimraf README.md src config build package.json package-lock.json test .eslintignore .eslintrc.js .editorconfig .babelrc .postcssrc.js"
   },
   "dependencies": {
+    "jsonp": "^0.2.1",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vuetify": "^0.17.7",
